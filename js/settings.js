@@ -1,4 +1,4 @@
-import lilGui from "./js/lil-gui.js";
+import lilGui from "./lil-gui.js";
 
 let recording = false;
 

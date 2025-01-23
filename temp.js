@@ -1,4 +1,4 @@
-import { LineMaterial } from "./js/LineMaterial.js";
+import { LineMaterial } from "./LineMaterial.js";
 
 //createLines(instancePositions);
 //let r = 5;
