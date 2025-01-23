@@ -1,10 +1,4 @@
-import { LineMaterial } from "https://cdn.jsdelivr.net/npm/three@0.162.0/examples/jsm/lines/LineMaterial.js";
-import { LineGeometry } from "https://cdn.jsdelivr.net/npm/three@0.162.0/examples/jsm/lines/LineGeometry.js";
-import { Line2 } from "https://cdn.jsdelivr.net/npm/three@0.162.0/examples/jsm/lines/Line2.js";
-import * as THREE from "three";
-import Stats from "https://cdnjs.cloudflare.com/ajax/libs/stats.js/r17/Stats.min.js";
-import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@0.162.0/examples/jsm/controls/OrbitControls.js";
-import lilGui from "https://cdn.jsdelivr.net/npm/lil-gui@0.19.2/+esm";
+import { LineMaterial } from "./js/LineMaterial.js";
 
 //createLines(instancePositions);
 //let r = 5;

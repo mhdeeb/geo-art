@@ -1,3 +1,8 @@
+import { LineGeometry } from "./js/LineGeometry.js";
+import { Line2 } from "./js/Line2.js";
+import * as THREE from "./js/three.module.min.js";
+
+
 let tri_func = (dr) => {
     let theta = 4 * Math.PI * dr;
 

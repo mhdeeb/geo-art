@@ -1,3 +1,5 @@
+import lilGui from "./js/lil-gui.js";
+
 let recording = false;
 
 const c1_string = "-.05*(x+y)-10.*t";

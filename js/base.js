@@ -1,3 +1,6 @@
+import Stats from "./js/Stats.min.js";
+import { OrbitControls } from "./js/OrbitControls.js";
+
 // RENDERER
 
 function getRenderer(canvas) {
