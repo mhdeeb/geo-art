@@ -5,7 +5,8 @@ export function createVertexPositions(func, count) {
   const instancePositions = new Float32Array(count * 3);
 
   for (let i = 0; i < count; i++) {
-    let p = new THREE.Vector3(func(i / (count - 1)));
+    const result = func(i / (count - 1));
+    const p = new THREE.Vector3(...result);
     instancePositions[i * 3 + 0] = p.x;
     instancePositions[i * 3 + 1] = p.y;
     instancePositions[i * 3 + 2] = p.z;

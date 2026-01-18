@@ -1,5 +1,6 @@
 import Stats from "./Stats.min.js";
 import { OrbitControls } from "./OrbitControls.js";
+import * as THREE from "./three.module.min.js";
 
 // RENDERER
 
@@ -17,7 +18,7 @@ function getRenderer(canvas) {
 
   renderer.setPixelRatio(window.devicePixelRatio);
 
-  renderer.setSize(width, height);
+  renderer.setSize(window.innerWidth, window.innerHeight);
 
   renderer.setClearColor("#000", 1);
 
@@ -26,7 +27,7 @@ function getRenderer(canvas) {
 
 // RECORDER
 
-function getTrack(canvas, chunks) {
+function getRecorder(canvas, chunks) {
   const stream = canvas.captureStream(0);
 
   const track = stream.getVideoTracks()[0];
@@ -52,7 +53,7 @@ function getTrack(canvas, chunks) {
     chunks.length = 0;
   };
 
-  return track;
+  return { track, recorder };
 }
 
 // STATS
@@ -80,7 +81,7 @@ function getCamera() {
 
 // CONTROLS
 
-function getControls(camera) {
+function getControls(camera, renderer) {
   const controls = new OrbitControls(camera, renderer.domElement);
 
   controls.saveState();
@@ -90,14 +91,17 @@ function getControls(camera) {
 
 // SECTION
 
-const scene = new THREE.Scene();
-const camera = getCamera();
-const controls = getControls(camera);
-const canvas = document.getElementById("canvas");
-const renderer = getRenderer(canvas);
-const clock = new THREE.Clock();
+export const scene = new THREE.Scene();
+export const camera = getCamera();
+export const canvas = document.getElementById("canvas");
+export const renderer = getRenderer(canvas);
+export const controls = getControls(camera, renderer);
+export const clock = new THREE.Clock();
+export const stats = getStats();
+
 const chunks = [];
-const track = getTrack(canvas, chunks);
+const { track, recorder } = getRecorder(canvas, chunks);
+export { track, recorder };
 
 scene.add(camera);
 
@@ -111,27 +115,17 @@ window.addEventListener("resize", () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-function update(delta) {
-  if (settings.animate) {
-    settings.time += delta * settings.speed_multiplier;
-    if (settings.time > settings.t_max) settings.time = settings.t_min;
-    else if (settings.time < settings.t_min) settings.time = settings.t_max;
-    materialLine.uniforms.time.value = settings.time;
-    materialCircle.uniforms.time.value = settings.time;
-  }
-  stats.update();
-}
-
-function render() {
+export function render() {
   renderer.render(scene, camera);
-  if (recording) track.requestFrame();
 }
 
-function animate() {
-  const delta = clock.getDelta();
-  render();
-  update(delta);
-  requestAnimationFrame(animate);
+export function startAnimation(updateCallback, recording) {
+  function animate() {
+    const delta = clock.getDelta();
+    render();
+    updateCallback(delta, recording);
+    if (recording.value) track.requestFrame();
+    requestAnimationFrame(animate);
+  }
+  animate();
 }
-
-animate();

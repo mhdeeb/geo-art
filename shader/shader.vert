@@ -12,12 +12,13 @@ void main() {
     vec3 transformedPosition = position + instancePosition;
     gl_Position = projectionMatrix * modelViewMatrix * vec4(transformedPosition, 1.0);
 
+    // Use instancePosition for color mapping (the actual curve position)
     if (normalize_parameters) {
-        space_time.x = (position.x - min_point.x) / volume.x;
-        space_time.y = (position.y - min_point.y) / volume.y;
-        space_time.z = (position.z - min_point.z) / volume.z;
-        space_time.w = (time - min_point.w) / min_point.w;
+        space_time.x = (instancePosition.x - min_point.x) / volume.x;
+        space_time.y = (instancePosition.y - min_point.y) / volume.y;
+        space_time.z = (instancePosition.z - min_point.z) / volume.z;
+        space_time.w = (time - min_point.w) / volume.w;
     } else {
-        space_time = vec4(position, time);
+        space_time = vec4(instancePosition, time);
     }
 }
