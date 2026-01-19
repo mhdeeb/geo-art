@@ -308,7 +308,7 @@ lines
         if (lineMesh) lineMesh.visible = value;
     });
 lines
-    .add(settings, "line_width", 0.0001, 0.5, 0.0001)
+    .add(settings, "line_width", 0.0001, 1, 0.0001)
     .name("Line Width")
     .onChange((value) => {
         if (materialLine && materialLine.linewidth !== undefined) {
@@ -382,7 +382,7 @@ const line_solid_color = lineColor
     .hide()
     .onChange((value) => {
         if (hasUniforms(materialLine))
-            materialLine.uniforms.solid_color.value = new THREE.Color(value);
+            materialLine.uniforms.solid_color.value.set(value);
     });
 lineColor.close();
 
@@ -470,7 +470,7 @@ const point_solid_color = pointColor
     .hide()
     .onChange((value) => {
         if (hasUniforms(materialCircle))
-            materialCircle.uniforms.solid_color.value = new THREE.Color(value);
+            materialCircle.uniforms.solid_color.value.set(value);
     });
 pointColor.close();
 
